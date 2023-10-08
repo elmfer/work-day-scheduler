@@ -27,6 +27,24 @@ function isPastFutureOrPresent(hourIndex) {
     return 'future';
 }
 
+function onSaveSchedule(event) {
+    var btn = $(event.target);
+
+    const agenda = $('#hour-' + btn.data('hour')).val();
+
+    localStorage.setItem(btn.data('hour'), agenda);
+}
+
+function loadSchedule() {
+    for(var i = 0; i < hours.length; i++) {
+        const agenda = localStorage.getItem(hours[i]);
+
+        if(agenda) {
+            $('#hour-' + hours[i]).val(agenda);
+        }
+    }
+}
+
 function loadWorkHours() {
     var scheduleContainer = $('#schedule');
     
@@ -44,12 +62,15 @@ function loadWorkHours() {
         var textArea = $('<textarea>');
         textArea.addClass('col-8 col-md-10 description');
         textArea.prop('rows', '3');
+        textArea.attr('id', 'hour-' + hours[i]);
         hourContainer.append(textArea);
 
         var saveBtn = $('<button>');
         saveBtn.addClass('btn saveBtn col-2 col-md-1');
         saveBtn.prop('aria-label', "save");
         saveBtn.append($('<i>').addClass('fas fa-save'));
+        saveBtn.data('hour', hours[i]);
+        saveBtn.on('click', onSaveSchedule);
         hourContainer.append(saveBtn);
 
         scheduleContainer.append(hourContainer);
@@ -77,6 +98,7 @@ $(function () {
     // the values of the corresponding textarea elements. HINT: How can the id
     // attribute of each time-block be used to do this?
     loadWorkHours();
+    loadSchedule();
 
     // TODO: Add code to display the current date in the header of the page.
     var currentDate = dayjs().format('dddd, MMMM D');

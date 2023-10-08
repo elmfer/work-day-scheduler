@@ -36,6 +36,22 @@ function onSaveSchedule(event) {
 }
 
 function loadSchedule() {
+    var today = dayjs(dayjs().format('YYYY-MM-DD'));
+
+    var lastDayUsed = localStorage.getItem('last-time-used');
+
+    if(lastDayUsed === null) {
+        localStorage.setItem('last-time-used', today.format('YYYY-MM-DD'));
+    }
+
+    lastDayUsed = dayjs(lastDayUsed);
+
+    if(today.diff(lastDayUsed, 'day') > 0) {
+        localStorage.clear();
+        localStorage.setItem('last-time-used', today.format('YYYY-MM-DD'));
+        return;
+    }
+
     for(var i = 0; i < hours.length; i++) {
         const agenda = localStorage.getItem(hours[i]);
 

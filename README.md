@@ -8,6 +8,7 @@ Start scheduling your day here: [https://elmfer.github.io/work-day-scheduler/](h
 * Lists all the work hours of the day
 * Set an agenda on a specific hour
 * Schedule presists on local storage
+* Schedule automatically clear upon loading it the next day
 
 ### Screenshot
 ![Screenshot](./assets/images/screenshot.png)

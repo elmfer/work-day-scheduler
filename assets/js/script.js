@@ -1,3 +1,61 @@
+const hours = [
+    '9AM', '10AM', '11AM', '12PM', '1PM',
+    '2PM', '3PM', '4PM', '5PM'
+];
+
+const hours24Format = [
+    '09:00', '10:00', '11:00', '12:00', '13:00',
+    '14:00', '15:00', '16:00', '17:00'
+];
+
+function isPastFutureOrPresent(hourIndex) {
+    var now = dayjs(dayjs().format('YYYY-MM-DD HH:00'));
+    //var now = dayjs('2023-10-07 11:00');
+    //now = dayjs(now.format('YYYY-MM-DD HH:00'));
+
+    var hour24Format = hours24Format[hourIndex];
+    var currentHour = dayjs(dayjs().format('YYYY-MM-DD ' + hour24Format));
+    
+    if(currentHour.diff(now, 'hour') < 0) {
+        return 'past';
+    }
+
+    if(currentHour.diff(now, 'hour') == 0) {
+        return 'present';
+    }
+
+    return 'future';
+}
+
+function loadWorkHours() {
+    var scheduleContainer = $('#schedule');
+    
+    for(var i = 0; i < hours.length; i++) {
+        var status = isPastFutureOrPresent(hours[i]);
+
+        var hourContainer = $('<div>');
+        hourContainer.addClass('row time-block ' + isPastFutureOrPresent(i));
+
+        var title = $('<div>');
+        title.addClass('col-2 col-md-1 hour text-center py-3')
+        title.text(hours[i]);
+        hourContainer.append(title);
+
+        var textArea = $('<textarea>');
+        textArea.addClass('col-8 col-md-10 description');
+        textArea.prop('rows', '3');
+        hourContainer.append(textArea);
+
+        var saveBtn = $('<button>');
+        saveBtn.addClass('btn saveBtn col-2 col-md-1');
+        saveBtn.prop('aria-label', "save");
+        saveBtn.append($('<i>').addClass('fas fa-save'));
+        hourContainer.append(saveBtn);
+
+        scheduleContainer.append(hourContainer);
+    }
+}
+
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
@@ -18,6 +76,7 @@ $(function () {
     // TODO: Add code to get any user input that was saved in localStorage and set
     // the values of the corresponding textarea elements. HINT: How can the id
     // attribute of each time-block be used to do this?
+    loadWorkHours();
 
     // TODO: Add code to display the current date in the header of the page.
     var currentDate = dayjs().format('dddd, MMMM D');

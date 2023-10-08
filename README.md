@@ -1,6 +1,8 @@
 # Work Day Scheduler
 Work day scheduler application. Stay on track with your duties using the Work Day Scheduler! View your agenda in blocks of time!
 
+Start scheduling your day here: [https://elmfer.github.io/work-day-scheduler/](https://elmfer.github.io/work-day-scheduler/)
+
 ### Features
 * Displays the current day at the top
 * Lists all the work hours of the day

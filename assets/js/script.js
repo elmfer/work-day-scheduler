@@ -82,11 +82,11 @@ function loadWorkHours() {
     // Loop through all available hours
     for(var i = 0; i < hours.length; i++) {
         // Determine if the hour is in the past, present, or future
-        var status = isPastFutureOrPresent(hours[i]);
+        var status = isPastFutureOrPresent(i);
 
         // Create the hour block
         var hourContainer = $('<div>');
-        hourContainer.addClass('row time-block ' + isPastFutureOrPresent(i));
+        hourContainer.addClass('row time-block ' + status);
 
         var title = $('<div>');
         title.addClass('col-2 col-md-1 hour text-center py-3')
